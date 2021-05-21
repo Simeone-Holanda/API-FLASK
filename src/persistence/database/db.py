@@ -60,9 +60,9 @@ class Database:
                 print("There is no data in the database.")
                 return response
 
-    def find_login(self, login, password):
+    def find_login(self, login):
         try:
-            response = self.connection.find_one({'login': login, 'senha': password}) 
+            response = self.connection.find_one({'login': login}) 
         except Exception as ex:
             raise ex
         else:
@@ -71,11 +71,10 @@ class Database:
     def delete_user(self, user_id):
         try:
             response = self.connection.find_one_and_delete({'_id': ObjectId(user_id)})
-            print("TO AQ")
             print(response)
         except Exception as ex:
             print(ex)
             raise ex
-        return user_id
+        return response
 
        

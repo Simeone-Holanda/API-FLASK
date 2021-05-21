@@ -15,17 +15,13 @@ class User:
 
     @staticmethod
     def hash_password(plaintext_password:str):
+        print("Dentro do hash")
+        print(plaintext_password)
         hash = bcrypt.hash(plaintext_password)
         User.password = hash
 
     @staticmethod
     def validate_password(plaintext_password:str):
+        print(plaintext_password)
+        print(User.password)
         return bcrypt.verify(plaintext_password,User.password)
-
-     # Metodo statico
-    #Este método irá criar um hash do password do usuário, para não salvar 
-    # o plaintext no banco. Utilizar o método bcrypt da biblioteca passlib.hash
-
-    #validate_password(plaintext_password : string) -> bool - Metodo statico
-    #Este método verifica se o password passado em plaintext é o gerador do hash que está presente no atributo self.password.
-    #Retorna True se o password foi validado, ou False se não é o password gerador.
