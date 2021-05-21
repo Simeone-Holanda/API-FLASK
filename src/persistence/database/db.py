@@ -1,3 +1,4 @@
+import re
 from pymongo import MongoClient
 from bson.json_util import ObjectId
 
@@ -5,9 +6,8 @@ class Database:
     name_collection='Datas'
     connection = None
     def __init__(self):
-        pass
+        self.set_connection()
 
-    # IMPLEMENTAR A ESTRATÉGIA DE DEFINE COLLECTION ?
     def set_connection(self):
         try:
             client_connection = MongoClient("mongodb://127.0.0.1:27017/")
@@ -20,9 +20,11 @@ class Database:
     
     def insert(self, documento_user: dict):
         try:
-            self.connection.insert_one(documento_user)
+            response = self.connection.insert_one(documento_user)
         except Exception as ex:
             raise ex
+        else:
+            return str(response.inserted_id)
 
     def update_user(self,user_id,newDocumento):
         try:
@@ -69,7 +71,11 @@ class Database:
     def delete_user(self, user_id):
         try:
             response = self.connection.find_one_and_delete({'_id': ObjectId(user_id)})
+            print("TO AQ")
+            print(response)
         except Exception as ex:
+            print(ex)
             raise ex
+        return user_id
 
        

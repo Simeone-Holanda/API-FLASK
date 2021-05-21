@@ -1,3 +1,5 @@
+from passlib.hash import bcrypt
+
 class User:
     _id = None
     first_name = None
@@ -5,14 +7,22 @@ class User:
     login = None
     password = None
 
-    def __init__(self, id, first_name, last_name,login, password):
-        self._id = id
+    def __init__(self, first_name, last_name,login, password):
         self.first_name = first_name
         self.last_name = last_name
         self.login = login
         self.password = password
 
-    #hash_password(plaintext_password : string) -> None - Metodo statico
+    @staticmethod
+    def hash_password(plaintext_password:str):
+        hash = bcrypt.hash(plaintext_password)
+        User.password = hash
+
+    @staticmethod
+    def validate_password(plaintext_password:str):
+        return bcrypt.verify(plaintext_password,User.password)
+
+     # Metodo statico
     #Este método irá criar um hash do password do usuário, para não salvar 
     # o plaintext no banco. Utilizar o método bcrypt da biblioteca passlib.hash
 
