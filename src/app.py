@@ -1,8 +1,6 @@
-
 from flask import Flask, request
 from .application.endpoints.routes import REQUEST_API
 from flask_swagger_ui import get_swaggerui_blueprint
-
 app = Flask(__name__)
 
 SWAGGER_URL = '/v1/reference'
@@ -18,7 +16,6 @@ SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
 
 app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 app.register_blueprint(REQUEST_API)
-
 @app.route('/')
 def inicio():
     return "<h1>WELCOME THE API</h1>"
