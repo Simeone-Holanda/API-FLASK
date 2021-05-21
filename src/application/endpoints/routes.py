@@ -1,10 +1,11 @@
+import random
 from ..services.routes_service import Services
 from flask import request, Blueprint, Response
 from flask.wrappers import Response
 from bson import json_util
 from ...Models.user import User
 
-REQUEST_API = Blueprint('routes3', __name__)
+REQUEST_API = Blueprint('routes', __name__)
 
 
 
@@ -30,7 +31,6 @@ def postDataUser():
     last_name = request_data['last_name']
     login = request_data['login']
     plaintext_password = request_data["plaintext_password"]
-
 
     if first_name and last_name and login and plaintext_password:
         user = User(first_name,last_name,login,plaintext_password)
@@ -60,7 +60,8 @@ def getUserForId(id):
     try:
         instanceServices = Services()
         data_user = instanceServices.getUserForIdService(id)
-    except:
+    except Exception as ex:
+        print(ex)
         response = {"code": 500,
                     "error": "Ocorreu um erro interno no servidor."}
         response = json_util.dumps(response)
@@ -143,7 +144,7 @@ def postLogin():
     login = request_data['login']
     password = request_data["password"]
     instanceServices = Services()
-    verifyUser = instanceServices.postLoginService()
+    verifyUser = instanceServices.searchLoginService(login)
 
     if verifyUser is None:
         response = { "code": 404,

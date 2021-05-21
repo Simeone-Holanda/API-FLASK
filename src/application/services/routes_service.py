@@ -14,13 +14,15 @@ class Services:
     def postDataUserService(self,datas: dict):
         try:
             return self.connectionDb.insert(datas)
-        except Exception:
+        except Exception as ex:
+            print(ex)
             raise Exception("Error in the method postDataUserService.")
     
     def getUserForIdService(self,id):
         try:
              return self.connectionDb.find_user(id)
-        except Exception:
+        except Exception as ex:
+            print(ex)
             raise Exception("Error in the method getUserForIdService.")
 
     def updateDateUserService(self,id, newDocument):
@@ -36,7 +38,7 @@ class Services:
         except Exception as ex:
             raise Exception("Error in the method deleteUserForIdService.")
 
-    def postLoginService(self,login):
+    def searchLoginService(self,login):
         try:
             return self.connectionDb.find_login(login)
         except Exception:
