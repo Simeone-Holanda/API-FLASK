@@ -4,9 +4,22 @@ from flask.wrappers import Response
 from bson import json_util
 from .Models.user import User
 from .persistence.database.db import Database
-
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
+
+SWAGGER_URL = '/v1/reference'
+API_URL = '/static/swagger.yaml'
+
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Crud of users"
+    }
+)
+
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 
 connectionDb = Database() # Create the connectio with db
 
@@ -94,7 +107,9 @@ def put(id):
             if user.validate_password(plaintext_password): # if validatation is true change for new password and insert in database
                 request_data['plaintext_password'] = User.password
                 dataUpdated = connectionDb.update_user(id,request_data)
-                response = json_util.dumps(dataUpdated)
+                response = {"code": 200,
+                            "message": "Sucesso in the operation."}
+                response = json_util.dumps(response)
                 return Response(response, status=200) 
             else:
                 response = {"code": 400,

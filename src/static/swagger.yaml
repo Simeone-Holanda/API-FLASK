@@ -1,0 +1,257 @@
+
+openapi: "3.0.1"
+
+info:
+  version: 1.0.0
+  title: API - CRUD OF USERS
+  description: API para manipular os dados dos usuários 
+  
+servers:
+  - description: Local Host HTTP
+    url: http://0.0.0.0:5000/ 
+
+paths:
+  /user/:
+    get:
+      tags:
+        - User
+      summary: Recovers all users in the database
+      description: Get all data from a user
+      responses:
+        '200':
+          description: Requested user data.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Users'
+        '400':
+          $ref: '#/components/responses/400'
+    post:
+      tags:
+        - User
+      summary: Recovers all users in the database
+      description: Get all data from a user
+
+      responses:
+        '200':
+          description: Returns user id and operation code.
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    code:
+                      type: integer
+                    _id:
+                     type: string
+        '400':
+          $ref: '#/components/responses/400'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Users'
+        description: Data of the user to be saved.
+        required: true
+
+  /user/{id}/:
+    get:
+      tags:
+        - User
+      summary: Retrieves users in the database by id
+      description: Get a user's data by id
+      parameters:
+        - name: _id
+          in: path
+          required: true
+          description: Id of admin.
+          example: '5c86d00c7a8618923481b48b'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Get user data for id.
+          content:
+            application/json:
+              schema: 
+                  $ref: '#/components/schemas/Users'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - User
+      summary: Recovers all users in the database
+      description: Get all data from a user
+      parameters:
+        - name: _id
+          in: path
+          required: true
+          description: Id of admin.
+          example: '5c86d00c7a8618923481b48b'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns user id and operation code.
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    code:
+                      type: integer
+                    mensage:
+                     type: string
+        '400':
+          $ref: '#/components/responses/400'
+
+        '404':
+          $ref: '#/components/responses/404'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Users'
+        description: Data of the user to be saved.
+        required: true
+    delete:
+      tags:
+        - User
+      summary: Retrieves users in the database by id
+      description: Get a user's data by id
+      parameters:
+        - name: _id
+          in: path
+          required: true
+          description: Id of admin.
+          example: '5c86d00c7a8618923481b48b'
+          schema:
+            type: string
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'     
+  /login/:
+    post:
+      tags:
+        - User
+      summary: Recovers all users in the database
+      description: Get all data from a user
+      responses:
+        '200':
+          description: Returns user id and operation code.
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    code:
+                      type: integer
+                    token:
+                     type: string
+        '400':
+          $ref: '#/components/responses/400'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login'
+        description: Login and password for verification.
+        required: true
+
+components:
+  schemas:
+      Users:
+          type: object
+          properties:  
+            _id: 
+              readOnly: true
+              type: string
+              description: "Id of user in database"
+            first_name: 
+              type: string
+              description: "First name of user"
+            last_name: 
+              type: string
+              description: "Last name of user"
+            login:
+              type: string
+              description: "Login of user"
+            password:
+              type: string
+              description: "Password of user"
+      login:
+          type: object
+          properties:  
+            login:
+              type: string
+              description: "Login of user"
+            password:
+              type: string
+              description: "Password of user"
+      Error:
+          type: object
+          required:
+            - code
+            - message
+
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: Code of error
+            message:
+              type: string
+              description: Error message.
+              example: Operation performed successfully.
+
+  responses:
+    '204':
+      description: >-
+        Operation performed successfully. There is no data to be returned
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                description: The code of return.
+              message:
+                  type: string
+                  description: Return mensage.
+                  example: The message of success.
+
+    '400':
+      description: >-
+        Request can not be met, syntactically incorrect or violates the
+        schema. Normally it occurs due to validation issues, such as fields
+        that are expected in the request body and not passed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '404':
+      description: >-
+        Specified resource does not exist. Usually when the URI is incorrect
+        or the resource is not found, or even no longer exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '500':
+      description: >-
+        An internal server error occurred. Although the client appears to
+        provide a correct request, the server encountered an unexpected
+        condition that prevented it from responding to the request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
