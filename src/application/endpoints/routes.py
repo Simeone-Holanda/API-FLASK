@@ -1,10 +1,11 @@
+import random
 from flask import request, Blueprint, Response
 from flask.wrappers import Response
 from bson import json_util
 from ...Models.user import User
 from ...persistence.database.db import Database
 
-REQUEST_API = Blueprint('metrics_routes', __name__)
+REQUEST_API = Blueprint('routes', __name__)
 
 connectionDb = Database() # Create the connectio with db
 
