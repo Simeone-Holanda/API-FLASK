@@ -31,7 +31,7 @@ paths:
     post:
       tags:
         - User
-      summary: Recovers all users in the database
+      summary: Insert a user into the database.
       description: Get all data from a user
 
       responses:
@@ -84,7 +84,7 @@ paths:
     put:
       tags:
         - User
-      summary: Recovers all users in the database
+      summary: Update a user into the database.
       description: Get all data from a user
       parameters:
         - name: _id
@@ -121,7 +121,7 @@ paths:
     delete:
       tags:
         - User
-      summary: Retrieves users in the database by id
+      summary: Delete a user into the database.
       description: Get a user's data by id
       parameters:
         - name: _id
@@ -142,7 +142,7 @@ paths:
     post:
       tags:
         - User
-      summary: Recovers all users in the database
+      summary: Check users in the bank by login
       description: Get all data from a user
       responses:
         '200':

@@ -7,21 +7,20 @@ Principais características:
 
 * Criptografia de senha
 * Persistencia de dados
-* Obtem dados de formas gerais
+* Cadastra, Atualiza, remove e busca usuários.
 
 
-Dependencia:
+Dependencias:
 
 *   MongoDB 
 
 *   Docker 
 
-
-# PASSOS PARA EXECULTAR:
-
+## Configure seu container docker com o mongo:
     sudo docker pull mongo:4.0.4
-
     sudo docker run -d -p 27017-27019:27017-27019 --name mongodb mongo:4.0.4
+
+## PASSOS PARA EXECULTAR:
 
     git clone 
 
@@ -34,7 +33,13 @@ Dependencia:
 # Acesso a documentação 
     http://0.0.0.0:5000/v1/reference
 
-### Feito com muito esforço!
+
+# Documentação:
+
+<img src="Documentation.jpeg">
+
+
+## Feito com muito esforço, por Simeone Holanda!
 
 
 
