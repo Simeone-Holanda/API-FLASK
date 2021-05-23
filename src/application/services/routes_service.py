@@ -11,9 +11,9 @@ class Services:
         except Exception:
             raise Exception("Error in the method getAllUserService.")
 
-    def postDataUserService(self,datas: dict):
+    def InsertDataUserService(self,datas: dict):
         try:
-            return self.connectionDb.insert(datas)
+            return self.connectionDb.insert_user(datas)
         except Exception as ex:
             print(ex)
             raise Exception("Error in the method postDataUserService.")

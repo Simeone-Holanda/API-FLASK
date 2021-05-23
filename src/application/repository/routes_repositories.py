@@ -1,7 +1,8 @@
 from bson.json_util import ObjectId
-from ...util.dataFormatter import remove_objectId,remove_objectIdInArray, schema_json
+from ...util.dataFormatter import remove_objectId,remove_objectIdInArray
+from ...persistence.schemas.schema import schema_json
 from ...background import ServiceBackground
-from pymongo.errors import CollectionInvalid
+from pymongo.errors import CollectionInvalid ,WriteError 
 from collections import OrderedDict
 
 class Repository:
@@ -15,10 +16,11 @@ class Repository:
             pass
         
 
-    def insert(self, documento_user: dict):
+    def insert_user(self, documento_user: dict):
         try:
-            response = self.instanceBd['Datass'].insert_one(documento_user)
-        except Exception as ex:
+            response = self.instanceBd['Datas'].insert_one(documento_user)
+        except WriteError as ex:
+            print(ex)
             raise ex
         else:
             return str(response.inserted_id)
@@ -88,7 +90,8 @@ class Repository:
             analises_schema = schema_json()
             dados = [('collMod', nameCollection), ('validator', analises_schema),
                         ('validationLevel', 'moderate')]
-            self.instanceBd.db.command(OrderedDict(dados))
-        except CollectionInvalid:
+            self.instanceBd.command(OrderedDict(dados))
+        except CollectionInvalid as ex:
             pass 
-       
+        except Exception as ex:
+            print(ex)

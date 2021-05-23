@@ -16,33 +16,3 @@ def remove_objectIdInArray(document_list: list):
     return document_list
 
 
-def schema_json():
-    schema_bd = {
-        "$jsonSchema": {
-            "bsonType": "object",
-            "required": ["user_id", "metrics"],
-            "properties": {
-                "user_id": {
-                    "bsonType": "string",
-                    "description": "Type string requerid"
-                    },
-                "first_name": {
-                    "bsonType": "string",
-                    "description": "Type string requerid"
-                },
-                "last_name": {
-                    "bsonType": "string",
-                    "description": "Type string requerid"
-                },
-                "login": {
-                    "bsonType": "string",
-                    "description": "Type string requerid"
-                },
-                "plaintext_password": {
-                    "bsonType": "string",
-                    "description": "Type string requerid"
-                }
-            }
-        }
-    }
-    return schema_bd

@@ -38,7 +38,7 @@ def postDataUser():
         if user.validate_password(plaintext_password): # if validatation is true change for new password and insert in database
             request_data['plaintext_password'] = User.password
             instanceServices =  Services()
-            user._id = instanceServices.postDataUserService(request_data)
+            user._id = instanceServices.InsertDataUserService(request_data)
             response = {"code": 200,
                         "_id": user._id}
             response = json_util.dumps(response)
